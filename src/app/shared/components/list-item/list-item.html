@@ -1,0 +1,64 @@
+<div
+  cdkDropList
+  class="item-dropzone parent"
+  [id]="parentItemId"
+  [cdkDropListData]="parentItem"
+  [cdkDropListConnectedTo]="allDropListsIds"
+  (cdkDropListDropped)="onDragDropParent($event)"
+>
+  <div
+    cdkDrag
+    [id]="item.uId"
+    [cdkDragData]="item"
+    [cdkDragDisabled]="dragDisabled"
+  >
+    <div
+      title="Drag this item with children"
+      class="item-drag-handle"
+      style="width: 100%"
+      cdkDragHandle
+    >
+      <i
+        *ngIf="item.icon"
+        class="material-icons"
+        style="font-size: 18px; margin-right: 8px"
+        >{{item.icon}}</i
+      >
+
+      <div style="font-size: 18px; width: 100%; z-index: 1">{{item.name }}</div>
+
+      <!-- <i *ngIf="!dragDisabled" class="material-icons"> drag_indicator </i> -->
+    </div>
+    <div class="item-drag-preview" *cdkDragPreview>{{item.name}}</div>
+  </div>
+
+  <div
+    *ngIf="hasDropZone"
+    cdkDropList
+    [class.item-dropzone]="showDropzone && item.type !== 'CHILD'"
+    [class.row]="sectionOrientation === 'row'"
+    [class.container]="item.type === 'ROOT'"
+    [id]="item.uId"
+    [cdkDropListConnectedTo]="connectedDropListsIds"
+    [cdkDropListData]="item"
+    (cdkDropListDropped)="onDragDropChildren($event)"
+  >
+    <div
+      style="height: 100px; background-color: red; z-index: -1"
+      *ngIf="!item.children.length &&  (item.type=== 'ROOT' || item.type=== 'SECTION')"
+    >
+      Please Drag and drop here...
+    </div>
+    <div *ngFor="let subItem of item.children; let i = index;" class="child">
+      <list-item
+        [item]="subItem"
+        [parentItem]="item"
+        [connectedDropListsIds]="allDropListsIds"
+        (itemDrop)="onDragDropItem($event)"
+        [showDropzone]="showDropzone"
+        [sectionOrientation]="sectionOrientation"
+      >
+      </list-item>
+    </div>
+  </div>
+</div>

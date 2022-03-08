@@ -1,0 +1,39 @@
+<div class="form" style="display: flex">
+  <div>
+    <list-item
+      [item]="parentItem"
+      [connectedDropListsIds]="connectedDropListsIds"
+      (itemDrop)="onDragDrop($event)"
+      sectionOrientation="column"
+    >
+    </list-item>
+  </div>
+
+  <div class="source" style="width: 200px; margin-left: 8px">
+    <list-item
+      id="layoutOptions"
+      [item]="layoutOptions"
+      [connectedDropListsIds]="connectedDropListsIds"
+      (itemDrop)="onDragDrop($event)"
+      [showDropzone]="false"
+    ></list-item>
+
+    <list-item
+      id="basicComponents"
+      [item]="basicComponents"
+      [connectedDropListsIds]="connectedDropListsIds"
+      (itemDrop)="onDragDrop($event)"
+      [showDropzone]="false"
+    >
+    </list-item>
+
+    <list-item
+      id="specialComponents"
+      [item]="specialComponents"
+      [connectedDropListsIds]="connectedDropListsIds"
+      (itemDrop)="onDragDrop($event)"
+      [showDropzone]="false"
+    >
+    </list-item>
+  </div>
+</div>
