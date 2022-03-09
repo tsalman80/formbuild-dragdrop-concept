@@ -1,10 +1,14 @@
 <div class="form" style="display: flex">
   <div style="width: 400px">
+    <ng-template #itemTemplate let-item>
+       {{item.name}} </ng-template>
+
     <list-item
       [item]="parentItem"
       [connectedDropListsIds]="connectedDropListsIds"
       (itemDrop)="onDragDrop($event)"
       sectionOrientation="column"
+      [itemTemplate]="itemTemplate"
     >
     </list-item>
   </div>

@@ -1,7 +1,14 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CdkDrag } from '@angular/cdk/drag-drop/typings/directives/drag';
 import { CdkDragStart } from '@angular/cdk/drag-drop/typings/drag-events';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { Item } from '../../models/item';
 
 @Component({
@@ -13,6 +20,7 @@ export class ListItemComponent {
   @Input() item: Item;
   @Input() parentItem?: Item;
   @Input() position: number;
+  @Input() itemTemplate: TemplateRef<any>;
 
   @Input() showDropzone: boolean = true;
   @Input() sectionOrientation: 'row' | 'column' = 'column';

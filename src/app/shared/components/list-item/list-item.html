@@ -1,6 +1,7 @@
 <div
   cdkDropList
   class="item-dropzone parent"
+  [class.item-dropzone]="item.type !== 'CHILD'"
   [id]="parentItemId"
   [cdkDropListData]="parentItem"
   [cdkDropListConnectedTo]="allDropListsIds"
@@ -12,7 +13,22 @@
       class="item-drag-handle"
       cdkDragHandle
     >
-      {{item.name}} - {{item.type}}
+      <ng-template #defaultTemplate>{{item.name}} - {{item.type}}</ng-template>
+
+      <ng-container
+        *ngIf="item.type === 'CHILD'"
+        [ngTemplateOutlet]="itemTemplate || defaultTemplate"
+        [ngTemplateOutletContext]="{ $implicit: item }"
+      >
+      </ng-container>
+
+      <ng-container
+        *ngIf="item.type ==='SECTION'"
+        [ngTemplateOutlet]="containerTemplate || defaultTemplate"
+        [ngTemplateOutletContext]="{ $implicit: item }"
+      >
+      </ng-container>
+
       <!-- <i *ngIf="!dragDisabled" class="material-icons"> drag_indicator </i> -->
     </div>
     <!-- <div class="example-custom-placeholder" *cdkDragPlaceholder>
@@ -24,7 +40,7 @@
   <ul
     *ngIf="item.children.length > 0 || item.type !== 'CHILD'"
     cdkDropList
-    class="item-dropzone"
+    [class.item-dropzone]="item.type !== 'CHILD'"
     [id]="item.uId"
     [cdkDropListConnectedTo]="connectedDropListsIds"
     [cdkDropListData]="item"
@@ -48,6 +64,7 @@
         [item]="subItem"
         [connectedDropListsIds]="allChildrenDropListsIds"
         (itemDrop)="onDragDrop($event)"
+        [itemTemplate]="itemTemplate"
       >
       </list-item>
     </li>
