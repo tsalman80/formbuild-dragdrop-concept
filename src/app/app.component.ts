@@ -132,6 +132,13 @@ export class CdkDragDropNestedListsExample implements OnInit {
     return ids;
   }
 
+  public get basicComponentsIds(): string[] {
+    // We reverse ids here to respect items nesting hierarchy
+    const ids = this.getIdsRecursive(this.basicComponents).reverse();
+    // console.log('connectedDropListsIds', ids);
+    return ids;
+  }
+
   public onDragDrop(event: CdkDragDrop<Item>) {
     event.container.element.nativeElement.classList.remove('active');
 

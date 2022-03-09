@@ -1,4 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDrag } from '@angular/cdk/drag-drop/typings/directives/drag';
+import { CdkDragStart } from '@angular/cdk/drag-drop/typings/drag-events';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Item } from '../../models/item';
 
@@ -10,6 +12,7 @@ import { Item } from '../../models/item';
 export class ListItemComponent {
   @Input() item: Item;
   @Input() parentItem?: Item;
+  @Input() position: number;
 
   @Input() showDropzone: boolean = true;
   @Input() sectionOrientation: 'row' | 'column' = 'column';
@@ -21,6 +24,10 @@ export class ListItemComponent {
 
   public get connectedDropListsIds(): string[] {
     return this.allDropListsIds.filter((id) => id !== this.item.uId);
+  }
+
+  public get allChildrenDropListsIds(): string[] {
+    return this.item.children.map((i) => i.uId);
   }
 
   public allDropListsIds: string[];
@@ -40,27 +47,55 @@ export class ListItemComponent {
     this.itemDrop = new EventEmitter();
   }
 
-  public onDragDropParent(event: CdkDragDrop<Item, Item>): void {
-    console.log('onDragDropParent', event.currentIndex, event.previousIndex);
+  // public onDragDropParent(event: CdkDragDrop<Item, Item>): void {
+  //   console.log('onDragDropParent', event.currentIndex, event.previousIndex);
+
+  //   if (!this.allowDrop(event)) return;
+
+  //   this.itemDrop.emit(event);
+  // }
+
+  // public onDragDropChildren(event: CdkDragDrop<Item, Item>): void {
+  //   console.log('onDragDropChildren', event.currentIndex, event.previousIndex);
+
+  //   if (!this.allowDrop(event)) return;
+
+  //   this.itemDrop.emit(event);
+  // }
+
+  public onDragDrop(event: CdkDragDrop<Item, Item>): void {
+    console.log(
+      'onDragDrop',
+      event.currentIndex,
+      event.previousIndex,
+      this.item,
+      this.parentItem
+    );
 
     if (!this.allowDrop(event)) return;
 
     this.itemDrop.emit(event);
   }
 
-  public onDragDropChildren(event: CdkDragDrop<Item, Item>): void {
-    console.log('onDragDropChildren', event.currentIndex, event.previousIndex);
-
-    if (!this.allowDrop(event)) return;
-
-    this.itemDrop.emit(event);
-  }
   public onDragDropItem(event: CdkDragDrop<Item, Item>): void {
-    console.log('onDragDropItem', event.currentIndex, event.previousIndex);
-
+    console.log(
+      'onDragDropItem',
+      event.currentIndex,
+      event.previousIndex,
+      this.item,
+      this.parentItem
+    );
     if (!this.allowDrop(event)) return;
-
     this.itemDrop.emit(event);
+  }
+
+  checkDropPredicate(item: CdkDrag<Item>) {
+    console.log('checkDropPredicate', item.data);
+    return true;
+  }
+
+  startDrag(event: CdkDragStart) {
+    console.log('startDrag', event.source.element);
   }
 
   get hasDropZone() {
