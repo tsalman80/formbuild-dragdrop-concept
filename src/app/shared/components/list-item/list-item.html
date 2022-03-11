@@ -35,38 +35,39 @@
       {{item.name}}
     </div> -->
     <!-- <div class="item-drag-preview" *cdkDragPreview>{{item.name}}</div> -->
-  </div>
 
-  <ul
-    *ngIf="item.children.length > 0 || item.type !== 'CHILD'"
-    cdkDropList
-    [class.item-dropzone]="item.type !== 'CHILD'"
-    [id]="item.uId"
-    [cdkDropListConnectedTo]="connectedDropListsIds"
-    [cdkDropListData]="item"
-    (cdkDropListDropped)="onDragDropItem($event)"
-  >
-    <li
-      *ngFor="let subItem of item.children"
-      cdkDrag
-      [id]="subItem.uId"
-      [cdkDragData]="subItem"
+    <ul
+      *ngIf="item.children.length > 0 || item.type !== 'CHILD'"
+      cdkDropList
+      class="item-dropzone child"
+      [class.item-dropzone]="item.type !== 'CHILD'"
+      [id]="item.uId"
+      [cdkDropListConnectedTo]="connectedDropListsIds"
+      [cdkDropListData]="item"
+      (cdkDropListDropped)="onDragDropItem($event)"
     >
-      <div
-        [class.section-placeholder]="subItem.type === 'SECTION'"
-        [class.child-placeholder]="subItem.type === 'CHILD'"
-        *cdkDragPlaceholder
-      ></div>
-      <div class="item-drag-preview" *cdkDragPreview>
-        {{subItem.name }} - {{subItem.type}}
-      </div>
-      <list-item
-        [item]="subItem"
-        [connectedDropListsIds]="allChildrenDropListsIds"
-        (itemDrop)="onDragDrop($event)"
-        [itemTemplate]="itemTemplate"
+      <li
+        *ngFor="let subItem of item.children"
+        cdkDrag
+        [id]="subItem.uId"
+        [cdkDragData]="subItem"
       >
-      </list-item>
-    </li>
-  </ul>
+        <div
+          [class.section-placeholder]="subItem.type === 'SECTION'"
+          [class.child-placeholder]="subItem.type === 'CHILD'"
+          *cdkDragPlaceholder
+        ></div>
+        <div class="item-drag-preview" *cdkDragPreview>
+          {{subItem.name }} - {{subItem.type}}
+        </div>
+        <list-item
+          [item]="subItem"
+          [connectedDropListsIds]="allChildrenDropListsIds"
+          (itemDrop)="onDragDrop($event)"
+          [itemTemplate]="itemTemplate"
+        >
+        </list-item>
+      </li>
+    </ul>
+  </div>
 </div>
