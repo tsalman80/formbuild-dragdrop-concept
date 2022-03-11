@@ -16,7 +16,10 @@
     "core-js": "2.6.9",
     "rxjs": "6.5.2",
     "uuid": "^3.3.2",
-    "zone.js": "0.9.1"
+    "zone.js": "0.9.1",
+    "primeflex": "2.0.0",
+    "primeicons": "^5.0.0",
+    "primeng": "^11.4.5"
   },
   "scripts": {
     "ng": "ng",

@@ -1,16 +1,17 @@
 <div class="form" style="display: flex">
   <div style="width: 400px">
-    <ng-template #itemTemplate let-item>
-       {{item.name}} </ng-template>
+    <ng-template #itemTemplate let-item> {{item.name}} </ng-template>
 
-    <list-item
-      [item]="parentItem"
-      [connectedDropListsIds]="connectedDropListsIds"
-      (itemDrop)="onDragDrop($event)"
-      sectionOrientation="column"
-      [itemTemplate]="itemTemplate"
-    >
-    </list-item>
+    <p-card>
+      <list-item
+        [item]="parentItem"
+        [connectedDropListsIds]="connectedDropListsIds"
+        (itemDrop)="onDragDrop($event)"
+        sectionOrientation="column"
+        [itemTemplate]="itemTemplate"
+      >
+      </list-item>
+    </p-card>
   </div>
 
   <div class="source" style="width: 200px; margin-left: 8px">
