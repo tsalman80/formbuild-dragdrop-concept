@@ -80,7 +80,7 @@ export class ListItemComponent {
       this.parentItem
     );
 
-    if (!this.allowDrop(event)) return;
+    // if (!this.allowDrop(event)) return;
 
     this.itemDrop.emit(event);
   }
@@ -93,7 +93,7 @@ export class ListItemComponent {
       this.item,
       this.parentItem
     );
-    if (!this.allowDrop(event)) return;
+    // if (!this.allowDrop(event)) return;
     this.itemDrop.emit(event);
   }
 
@@ -112,25 +112,5 @@ export class ListItemComponent {
       this.item.type === 'SECTION' ||
       this.item.type === 'ROOT'
     );
-  }
-
-  private allowDrop(event: CdkDragDrop<Item>) {
-    const movingItem = event.item.data;
-    const toItem = event.container.data;
-    console.log({ toItem, movingItem });
-
-    if (
-      this.sectionAsParentOnly &&
-      toItem.type === 'ROOT' &&
-      movingItem.type === 'CHILD'
-    ) {
-      return false;
-    }
-
-    if (toItem.type === movingItem.type) {
-      return false;
-    }
-
-    return true;
   }
 }
